@@ -11,13 +11,14 @@ cd
 mkdir Dev
 cd Dev
 git clone https://github.com/VladUsatii/snapgrid.git
+pip install -r requirements.txt
 ```
 
-Then, cmd+Space and find 'Automator.' Create a new 'Quick Operation,' and drag in the '''execute.sh''' file. Make sure that the script handler is titled 'Run Shell Script.' If it is, press 'Play' in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
+Then, ```cmd``` + ```Space``` and find ```Automator.``` Create a new ```Quick Operation,``` and drag in the ```execute.sh``` file. Make sure that the script handler is titled ```Run Shell Script```. If it is, press ```Play``` in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
 
 ![How you should look so far](https://github.com/VladUsatii/snapgrid/blob/main/tutorial_image1.png?raw=true)
 
-Lastly, accept permissions for Automator by opening System Preferenceas, going to Security, pressing Accessibility, opening the lock with password, and dragging in Finder and Automator as accepted tools. Close the lock, make your Automator keybind, and test out the Automator keybind.
+Lastly, accept permissions for Automator by opening System Preferences, going to Security, pressing Accessibility, opening the lock with password, and dragging in Finder and Automator as accepted tools. Close the lock, make your Automator keybind, and test out the Automator keybind.
 
 ## TODO
 
@@ -32,3 +33,10 @@ One of the most common issues is that your keybinds do not work. The keybinds th
 
 #### Access Denied
 As stated, go to the System Preferences > Security > Accessibility and add Finder and Automator with the '+' buttons. If this doesn't work, try running ```chmod +x exec.sh``` and running from Terminal.
+
+#### Computer Broken/Frozen
+Please run this shortcut when Chrome and Terminal are both open. To quickly quit the operation, ```cmd``` + ```Q``` on the app(s), wait a few seconds, and open both up. Test the command. If this doesn't help, restart your computer and don't open up old windows on restart.
+
+#### Run as Administrator
+This doesn't happen, unless you run it from Automator. Please run in Automator.
+
