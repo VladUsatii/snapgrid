@@ -4,9 +4,18 @@ A tool for lazy programmers to quickly snap Google Chrome and Terminal to the le
 
 ## Installation
 
-First, git clone the repository on your local machine. Make sure you save it in a folder called Dev, located at your home directory (where you see Downloads, Desktop, etc.).
+Firstly, do the following after opening a fresh Terminal screen:
 
-Then, go to Automator, create a new 'Quick Operation,' and drag in the '''execute.sh''' file. Make sure that the script handler is titled 'Run Shell Script.' If it is, press 'Play' in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
+'''bash
+cd
+mkdir Dev
+cd Dev
+git clone https://github.com/VladUsatii/snapgrid.git
+'''
+
+Then, cmd+Space and find 'Automator.' Create a new 'Quick Operation,' and drag in the '''execute.sh''' file. Make sure that the script handler is titled 'Run Shell Script.' If it is, press 'Play' in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
+
+![How you should look so far](https://github.com/VladUsatii/snapgrid/blob/main/tutorial_image1.png?raw=true)
 
 Lastly, accept permissions for Automator by opening System Preferenceas, going to Security, pressing Accessibility, opening the lock with password, and dragging in Finder and Automator as accepted tools. Close the lock, make your Automator keybind, and test out the Automator keybind.
 
