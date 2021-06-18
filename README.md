@@ -6,12 +6,12 @@ A tool for lazy programmers to quickly snap Google Chrome and Terminal to the le
 
 Firstly, do the following after opening a fresh Terminal screen:
 
-'''bash
+```bash
 cd
 mkdir Dev
 cd Dev
 git clone https://github.com/VladUsatii/snapgrid.git
-'''
+```
 
 Then, cmd+Space and find 'Automator.' Create a new 'Quick Operation,' and drag in the '''execute.sh''' file. Make sure that the script handler is titled 'Run Shell Script.' If it is, press 'Play' in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
 
@@ -27,4 +27,8 @@ Lastly, accept permissions for Automator by opening System Preferenceas, going t
 
 ## Common Issues
 
+#### Keybinds
+One of the most common issues is that your keybinds do not work. The keybinds that I chose are: cmd+-, or the command key synchronously with the negative key. If this key doesn't work for you, there are many resources for other, unused keys online.
 
+#### Access Denied
+As stated, go to the System Preferences > Security > Accessibility and add Finder and Automator with the '+' buttons. If this doesn't work, try running ```chmod +x exec.sh``` and running from Terminal.
