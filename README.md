@@ -14,17 +14,24 @@ git clone https://github.com/VladUsatii/snapgrid.git
 pip install -r requirements.txt
 ```
 
-Then, ```cmd``` + ```Space``` and find ```Automator.``` Create a new ```Quick Operation,``` and drag in the ```execute.sh``` file. Make sure that the script handler is titled ```Run Shell Script```. If it is, press ```Play``` in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
+Then, ```cmd``` + ```Space``` and find ```Automator.``` Create a new ```Quick Operation```. Make sure that the script handler is titled ```Run Shell Script```. If it is, type the following in:
+
+```bash
+cd Dev/snapgrid && sh execute.sh
+```
+
+This tells your computer to change directory to Dev/snapgrid and to run the execute.shell file.
+
+press ```Play``` in the top-right corner (newest version of MacOS), and make sure it runs a check-mark.
 
 ![How you should look so far](https://github.com/VladUsatii/snapgrid/blob/main/tutorial_image1.png?raw=true)
 
 Lastly, accept permissions for Automator by opening System Preferences, going to Security, pressing Accessibility, opening the lock with password, and dragging in Finder and Automator as accepted tools. Close the lock, make your Automator keybind, and test out the Automator keybind.
 
 ## TODO
-
-- Figure out how to combat Google Chrome interrupted keybinds (cloned keybinds).
-- Find a native solution (with no Python or environment variables).
-- Learn the tradeoff between plain osascript and a Bash executable linking to osascript.
+- Add custom user implementation functionality (e.g., let user add any application for left and right grid snap)
+- Allow Tri-snap
+- Figure out the tradeoff between osascript and sys calls
 
 ## Common Issues
 
