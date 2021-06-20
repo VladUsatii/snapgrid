@@ -10,14 +10,10 @@ from Cocoa import (NSFont, NSFontAttributeName, NSColor, NSForegroundColorAttrib
 from itertools import chain
 from appscript import *
 
-# DEFINE
-# font
-system = NSFont.fontWithName_size_("Helvetica Neue", 16.0)
-# color
-black = NSColor.blackColor()
-red = NSColor.redColor()
-green = NSColor.greenColor()
-white = NSColor.colorWithCalibratedRed_green_blue_alpha_(1, 1, 1, 1)
+# ACCESSORIES DICT
+from dict import Font, Color
+font = Font()
+color = Color()
 
 #TODO: learn why Cocoa's wrappers require a dictionary
 """
@@ -29,8 +25,8 @@ propListFromPyCollec used to make NSDictionary from lambda for converted style c
 
 # "Open Apps" title class
 attributes = propertyListFromPythonCollection({
-	NSFontAttributeName: system,
-	NSForegroundColorAttributeName: white},
+	NSFontAttributeName: font.BIG_SYSTEM,
+	NSForegroundColorAttributeName: color.WHITE},
 	conversionHelper=lambda x: x)
 
 # "Set Keybinds" title class (TODO)
@@ -42,7 +38,6 @@ attributes = propertyListFromPythonCollection({
 
 appsOpen = [apps["NSApplicationName"] for apps in NSWorkspace.sharedWorkspace().launchedApplications()]
 appsOpen_byPath = [apps["NSApplicationPath"] for apps in NSWorkspace.sharedWorkspace().launchedApplications()]
-
 appsDict = [[app, path] for app, path in zip(appsOpen, appsOpen_byPath)]
 
 # Open Automator Here
@@ -71,7 +66,8 @@ menu_item = rumps.MenuItem("")
 menu_item._menuitem.setAttributedTitle_(string)
 menu = [menu_item]
 
-def searchForItem(file_to_find):
+def searchForItem(x):
+	pass
 
 # all open apps
 for x in appsDict:
