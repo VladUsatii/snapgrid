@@ -9,10 +9,10 @@ from Cocoa import (NSFont, NSFontAttributeName, NSColor, NSForegroundColorAttrib
 # DEFINE
 
 # font
-BIG_SYSTEM = NSFont.fontWithName_size_("Helvetica Neue", 16.0)
+BIG_SYSTEM = NSFont.fontWithName_size_("Helvetica Neue Bold", 16.0)
 BIG_MONO = NSFont.fontWithName_size_("Monaco", 16.0)
 
-SMALL_SYSTEM = NSFont.fontWithName_size_("Helvetica Neue", 13.0)
+SMALL_SYSTEM = NSFont.fontWithName_size_("Helvetica Neue Bold", 13.0)
 SMALL_MONO = NSFont.fontWithName_size_("Monaco", 13.0)
 
 # color

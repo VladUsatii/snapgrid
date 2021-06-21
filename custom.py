@@ -28,6 +28,11 @@ attributes = propertyListFromPythonCollection({
 	NSFontAttributeName: font.BIG_SYSTEM,
 	NSForegroundColorAttributeName: color.WHITE},
 	conversionHelper=lambda x: x)
+## "Open Apps" description class
+attributesDesc = propertyListFromPythonCollection({
+	NSFontAttributeName: font.SMALL_SYSTEM,
+	NSForegroundColorAttributeName: color.WHITE},
+	conversionHelper=lambda x: x)
 
 # "Set Keybinds" title class (TODO)
 
@@ -45,37 +50,43 @@ appsDict = [[app, path] for app, path in zip(appsOpen, appsOpen_byPath)]
 
 # View Tutorial
 
-
-# Settings Portion
-
-@rumps.clicked("About Snapgrid")
-def about(sender):
-	rumps.alert("Snapgrid is an app created to configure the windows and keybinds used in your shortcut code. The shortcut code snaps your first application to the left and the second application to the right.")
-
-@rumps.clicked("Preferences")
-def preferences(sender):
-	rumps.alert("Nothing here yet.")
-
 @rumps.clicked("Quit Snapgrid")
 def quit(_):
 	rumps.quit_application()
 
+
 # header
-string = NSAttributedString.alloc().initWithString_attributes_("Open Apps", attributes)
+string = NSAttributedString.alloc().initWithString_attributes_("Open Apps 🚦", attributes)
 menu_item = rumps.MenuItem("")
 menu_item._menuitem.setAttributedTitle_(string)
 menu = [menu_item]
+
+# description of header
+stringDesc = NSAttributedString.alloc().initWithString_attributes_("Click the app you want to snap Terminal with.", attributesDesc)
+menu_itemDesc = rumps.MenuItem("")
+menu_itemDesc._menuitem.setAttributedTitle_(stringDesc)
+
+menu.append(menu_itemDesc)
+
 
 def searchForItem(x):
 	pass
 
 # all open apps
 for x in appsDict:
-	new_menu_item = rumps.MenuItem(str(x[0]), callback=searchForItem(x[1]))
-	menu.append(new_menu_item)
+	if x[0] == "Finder" or x[0] == "Terminal":
+		continue # don't show finder or terminal
+	else:
+		new_menu_item = rumps.MenuItem(str("" + x[0]), callback=searchForItem(x[1])) # 3 spaces
+		menu.append(new_menu_item)
 
 menu.append(None)
 
+# update quit button
+def quit():
+	rumps.quit_application()
+quit = rumps.MenuItem("Quit Snapgrid", callback=lambda: quit(), key="Q")
+menu.append(quit)
 
 # init
 app = rumps.App("Snapgrid", title=None, icon="snapgridLogo.png", template=None, menu=menu, quit_button=None)
