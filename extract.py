@@ -12,16 +12,18 @@ if platform.system() == 'Darwin':
 	width = int(NSScreen.mainScreen().frame().size.width)
 	height = int(NSScreen.mainScreen().frame().size.height)
 
+	with open('applicationName.txt', 'r') as file:
+		applicationName = file.read().replace('\n', '')
 
 	# TODO: Figure out a better way to organize prerequisites
 	applescript = '''\
-	tell application "Google Chrome"
+	tell application "{application}"
 	    set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
 	end tell
 	tell application "Terminal"
 		set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
 	end tell\
-	'''.format(W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
+	'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
 
 	# parse and stdout
 	args = [item for x in [("-e",l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
