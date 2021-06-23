@@ -1,5 +1,7 @@
 # snapgrid
 
+![Snapgrid Logo](https://github.com/VladUsatii/snapgrid/blob/main/logo.png?raw=True)
+
 A tool for lazy programmers to quickly snap Google Chrome and Terminal to the left and right bounds of their screen for fast and more efficient workflow. This was designed using Python3, osascript (AppleScript), Bash/Shell, and C. This project was made for public recreation and reuse, but not for sale. Please be kind and contribute if you found this tool helpful <3.
 
 ## Installation
