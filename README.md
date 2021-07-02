@@ -44,8 +44,7 @@ chmod +x custom.py
 #### This is the moment you've been waiting for.
 
 ## TODO
-- Allow Tri-snap
-- Figure out the tradeoff between osascript and sys calls
+- Nothing at the moment
 
 ## Common Issues
 
