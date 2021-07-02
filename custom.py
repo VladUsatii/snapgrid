@@ -92,12 +92,59 @@ menu_itemDesc2._menuitem.setAttributedTitle_(stringDesc2)
 
 menu.append(menu_itemDesc2)
 menu.append("No options available.")
+
+# divider
+menu.append(None)
+
+# header no. 3
+string3 = NSAttributedString.alloc().initWithString_attributes_("Snap Layout 🧰", attributes)
+menu_item3 = rumps.MenuItem("")
+menu_item3._menuitem.setAttributedTitle_(string3)
+
+menu.append(menu_item3)
+
+# description of header no. 3
+stringDesc3 = NSAttributedString.alloc().initWithString_attributes_("Select the layout you want to snap to.", attributesDesc)
+menu_itemDesc3 = rumps.MenuItem("")
+menu_itemDesc3._menuitem.setAttributedTitle_(stringDesc3)
+
+menu.append(menu_itemDesc3)
+
+# alter the execute.sh file to dual on click
+def dual(sender):
+	lines = open("execute.sh").read().splitlines()
+	lines[-1] = "python3 extract.py dual"
+	open("execute.sh", 'w').write('\n'.join(lines))
+	open("execute.sh").close()
+	rumps.notification("Dual enabled", "Your keybinds have remained the same", "To change your snap orientation, click another option", data=None, sound=True)
+
+dualsnap = rumps.MenuItem("Dual", callback=dual, key='2')
+
+menu.append(dualsnap)
+
+# alter the execute.sh file to tripend on click
+def trisnap(sender):
+	lines = open("execute.sh").read().splitlines()
+	lines[-1] = "python3 extract.py trisnap"
+	open("execute.sh", 'w').write('\n'.join(lines))
+	open("execute.sh").close()
+	rumps.notification("Trisnap enabled", "Your keybinds have remained the same", "To change your snap orientation, click another option", data=None, sound=True)
+
+tripend = rumps.MenuItem("Trisnap", callback=trisnap, key='3')
+
+menu.append(tripend)
+
+
+# divider
 menu.append(None)
 
 
+
+
+#TODO:
 # get a list of a few keybinds
 def aboutUs():
-	subprocess.Popen(["python3", "about.py"], stdout=subprocess.PIPE)
+	subprocess.Popen(["python3", "about.py"], stdout=subprocess.PIPE) # not working
 
 # about button
 # about = rumps.MenuItem("About Snapgrid", callback=lambda: aboutUs(), key="A")
@@ -107,6 +154,7 @@ menu.append(about)
 # update quit button
 def quit():
 	rumps.quit_application()
+
 quit = rumps.MenuItem("Quit Snapgrid", callback=lambda: quit(), key="Q")
 menu.append(quit)
 
