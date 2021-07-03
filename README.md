@@ -41,12 +41,20 @@ chmod +x custom.py
 
 #### Now, in the top right corner of your Mac, you will be able to click on the Snapgrid logo and select which application you want to snap Terminal with!
 
+### Update (Stable Release 2):
+#### We now have support for trisnap! If you click on the snapgrid logo, there are snap "Modes" available: Dual and Trisnap. If you click Trisnap, you will have two Terminal screens and an open screen on the left of your Mac. This was made for max utility and speed reasons. What if a user wants three windows instead of two so that he can go back and forth from Terminal to Terminal and Chrome to Terminal?
+
+We hope you enjoy this change. Next release, we hope to add support for Mono (snap one application to the side). This is helpful for users who want access to their Desktop and another application (perhaps to drag things into that app?).
+
 #### This is the moment you've been waiting for.
 
 ## TODO
 - Nothing at the moment
 
 ## Common Issues
+
+#### Random Error
+Make sure you have an application other than Terminal open when running our osascript.
 
 #### Keybinds
 One of the most common issues is that your keybinds do not work. The keybinds that I chose are: cmd+-, or the command key synchronously with the negative key. If this key doesn't work for you, there are many resources for other, unused keys online.

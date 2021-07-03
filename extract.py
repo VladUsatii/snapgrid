@@ -13,45 +13,98 @@ if platform.system() == 'Darwin':
 	height = int(NSScreen.mainScreen().frame().size.height)
 
 	with open('applicationName.txt', 'r') as file:
-		applicationName = file.read().replace('\n', '')
+		# parse and stdout
+		def parse(applescript):
+			args = [item for x in [("-e",l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
+			proc = subprocess.Popen(["osascript"] + args , stdout=subprocess.PIPE)
+			progname = proc.stdout.read().strip()
+			sys.stdout.write(str(progname))
 
-		print(sys.argv)
+		# read open application name
+		applicationName = file.read().replace('\n', '')
 
 		# dual option selected through argument change
 		if str(sys.argv[1]) == "dual":
-			# TODO: Figure out a better way to organize prerequisites
-			applescript = '''\
-			tell application "{application}"
-				set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
-			end tell
-			tell application "Terminal"
-				set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
-			end tell\
-			'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
+			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			if num_of_terminals == 1:
+				dual_applescript = '''\
+				tell application "{application}"
+					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
+				end tell
+				tell application "Terminal"
+					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
+				end tell\
+				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
+			elif num_of_terminals == 0:
+				dual_applescript = '''\
+				tell application "{application}"
+					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
+				end tell
+				tell application "Terminal"
+					do script " "
+					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
+				end tell\
+				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
+			else:
+				dual_applescript = '''\
+				tell application "{application}"
+					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
+				end tell
+				tell application "Terminal"
+					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
+				end tell\
+				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
 
-			# parse and stdout
-			args = [item for x in [("-e",l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
-			proc = subprocess.Popen(["osascript"] + args ,stdout=subprocess.PIPE )
-			progname = proc.stdout.read().strip()
-			sys.stdout.write(str(progname))
+			parse(dual_applescript)
 
 		# tripend option selected through argument change
 		elif str(sys.argv[1]) == "trisnap":
-			# TODO: Figure out a better way to organize prerequisites
-			applescript = '''\
-			tell application "{application}"
-				set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
-			end tell
-			tell application "Terminal"
-				set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
-			end tell\
-			'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height//2))
+			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			if num_of_terminals == 1:
+				trisnap_applescript = '''\
+				tell application "{application}"
+					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
+				end tell
+				tell application "Terminal"
+					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
+					do script " "
+					activate
+					set bounds of front window to {{{leftPos_terminal}, {H_terminal}, {W_terminal}, {H_terminal2}}}
+				end tell\
+				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height//2), H_terminal2=str(height))
+			elif num_of_terminals == 0:
+				trisnap_applescript = '''\
+				tell application "{application}"
+					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
+				end tell
+				tell application "Terminal"
+					do script " "
+					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
+				end tell
+				tell application "Terminal"
+					do script " "
+					activate
+					set bounds of front window to {{{leftPos_terminal}, {H_terminal}, {W_terminal}, {H_terminal2}}}
+				end tell\
+				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height//2), H_terminal2=str(height))
+			else:
+				trisnap_applescript = '''\
+				tell application "{application}"
+					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
+				end tell
+				tell application "System Events" to tell process "Terminal"
+					tell window 1
+						set position to {{{leftPos_terminal}, 0}}
+						set size to {{{W_terminal}, {H_terminal}}}
+					end tell
+					tell window 2
+						set position to {{{leftPos_terminal}, {H_terminal}}}
+						set size to {{{leftPos_terminal}, {H_terminal}}}
+					end tell
+				end tell\
+				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height//2))
 
-			# parse and stdout
-			args = [item for x in [("-e",l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
-			proc = subprocess.Popen(["osascript"] + args ,stdout=subprocess.PIPE )
-			progname = proc.stdout.read().strip()
-			sys.stdout.write(str(progname))
+			parse(trisnap_applescript)
 
 elif platform.system() == 'Windows':
 	import ctypes
