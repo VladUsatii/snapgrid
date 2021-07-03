@@ -30,6 +30,8 @@ press ```Play``` in the top-right corner (newest version of MacOS), and make sur
 
 Lastly, accept permissions for Automator by opening System Preferences, going to Security, pressing Accessibility, opening the lock with password, and dragging in Finder and Automator as accepted tools. Close the lock, make your Automator keybind, and test out the Automator keybind.
 
+![How your keybinds should look](https://github.com/VladUsatii/snapgrid/blob/main/Keybinds.png?raw=true)
+
 # Use the App
 
 #### In Terminal, run:
