@@ -24,7 +24,26 @@ if platform.system() == 'Darwin':
 		applicationName = file.read().replace('\n', '')
 
 		# dual option selected through argument change
-		if str(sys.argv[1]) == "dual":
+		if str(sys.argv[1]) == "mono":
+			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			if num_of_terminals == 0:
+				mono_applescript = '''\
+				tell application "Terminal"
+					do script " "
+					activate
+					set bounds of front window to {{0, 0, {W_terminal}, {H_terminal}}}
+				end tell\
+				'''.format(W_terminal=str(width), H_terminal=str(height))
+			else:
+				mono_applescript = '''\
+				tell application "Terminal"
+					set bounds of front window to {{0, 0, {W_terminal}, {H_terminal}}}
+				end tell\
+				'''.format(W_terminal=str(width), H_terminal=str(height))
+
+			parse(mono_applescript)
+
+		elif str(sys.argv[1]) == "dual":
 			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
 			if num_of_terminals == 1:
 				dual_applescript = '''\
@@ -41,6 +60,7 @@ if platform.system() == 'Darwin':
 					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
 				end tell
 				tell application "Terminal"
+					activate
 					do script " "
 					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
 				end tell\

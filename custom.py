@@ -110,6 +110,19 @@ menu_itemDesc3._menuitem.setAttributedTitle_(stringDesc3)
 
 menu.append(menu_itemDesc3)
 
+
+# alter the execute.sh file to dual on click
+def mono(sender):
+	lines = open("execute.sh").read().splitlines()
+	lines[-1] = "python3 extract.py mono"
+	open("execute.sh", 'w').write('\n'.join(lines))
+	open("execute.sh").close()
+	rumps.notification("Mono enabled", "Your keybinds have remained the same", "To change your snap orientation, click another option", data=None, sound=True)
+
+monosnap = rumps.MenuItem("Mono", callback=mono, key='1')
+
+menu.append(monosnap)
+
 # alter the execute.sh file to dual on click
 def dual(sender):
 	lines = open("execute.sh").read().splitlines()
@@ -143,12 +156,12 @@ menu.append(None)
 
 #TODO:
 # get a list of a few keybinds
-def aboutUs():
+def aboutUs(sender):
 	subprocess.Popen(["python3", "about.py"], stdout=subprocess.PIPE) # not working
 
 # about button
 # about = rumps.MenuItem("About Snapgrid", callback=lambda: aboutUs(), key="A")
-about = rumps.MenuItem("About Snapgrid", callback=None, key="A")
+about = rumps.MenuItem("About Snapgrid", callback=aboutUs, key="A")
 menu.append(about)
 
 # update quit button
