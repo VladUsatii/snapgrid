@@ -15,10 +15,13 @@ if platform.system() == 'Darwin':
 	with open('applicationName.txt', 'r') as file:
 		# parse and stdout
 		def parse(applescript):
-			args = [item for x in [("-e",l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
-			proc = subprocess.Popen(["osascript"] + args , stdout=subprocess.PIPE)
-			progname = proc.stdout.read().strip()
-			sys.stdout.write(str(progname))
+			try:
+				args = [item for x in [("-e",l.strip()) for l in applescript.split('\n') if l.strip() != ''] for item in x]
+				proc = subprocess.Popen(["osascript"] + args , stdout=subprocess.PIPE)
+				progname = proc.stdout.read().strip()
+				sys.stdout.write(str(progname))
+			except Error as error:
+				print(f'error: {err}'.format(err=error))
 
 		# read open application name
 		applicationName = file.read().replace('\n', '')
@@ -26,17 +29,33 @@ if platform.system() == 'Darwin':
 		# dual option selected through argument change
 		if str(sys.argv[1]) == "mono":
 			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
-			if num_of_terminals == 0:
+			if num_of_terminals == 1:
 				mono_applescript = '''\
-				tell application "Terminal"
-					do script " "
+				tell application "Terminal" to activate
+					tell application "System Events" to keystroke "t" using command down
+						repeat while contents of selected tab of window 1 starts with linefeed
+						delay 0.01
+					end repeat
+					do script "" in front window
 					activate
 					set bounds of front window to {{0, 0, {W_terminal}, {H_terminal}}}
 				end tell\
 				'''.format(W_terminal=str(width), H_terminal=str(height))
+
+				#		tell application "Terminal"
+				#					activate
+				#					tell window 1 of application
+				#					do script " "
+				#					activate
+				#					set bounds of front window to {{0, 0, {W_terminal}, {H_terminal}}}
+				#					windows where name contains "bash"
+				#					if result is not {{}} then set index of item 1 of result to 1
+				#				end tell\
+
 			else:
 				mono_applescript = '''\
 				tell application "Terminal"
+					activate
 					set bounds of front window to {{0, 0, {W_terminal}, {H_terminal}}}
 				end tell\
 				'''.format(W_terminal=str(width), H_terminal=str(height))
@@ -45,7 +64,7 @@ if platform.system() == 'Darwin':
 
 		elif str(sys.argv[1]) == "dual":
 			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
-			if num_of_terminals == 1:
+			if num_of_terminals == 2:
 				dual_applescript = '''\
 				tell application "{application}"
 					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
@@ -54,7 +73,7 @@ if platform.system() == 'Darwin':
 					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
 				end tell\
 				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
-			elif num_of_terminals == 0:
+			elif num_of_terminals == 1:
 				dual_applescript = '''\
 				tell application "{application}"
 					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
@@ -62,6 +81,7 @@ if platform.system() == 'Darwin':
 				tell application "Terminal"
 					activate
 					do script " "
+					activate
 					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
 				end tell\
 				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height))
@@ -80,7 +100,7 @@ if platform.system() == 'Darwin':
 		# tripend option selected through argument change
 		elif str(sys.argv[1]) == "trisnap":
 			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
-			if num_of_terminals == 1:
+			if num_of_terminals == 2:
 				trisnap_applescript = '''\
 				tell application "{application}"
 					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
@@ -92,16 +112,19 @@ if platform.system() == 'Darwin':
 					set bounds of front window to {{{leftPos_terminal}, {H_terminal}, {W_terminal}, {H_terminal2}}}
 				end tell\
 				'''.format(application=str(applicationName), W_chrome=str((width//2) - 1), H_chrome=str(height), leftPos_terminal=str(width//2), W_terminal=str(((width//2) - 1) + (width//2)), H_terminal=str(height//2), H_terminal2=str(height))
-			elif num_of_terminals == 0:
+			elif num_of_terminals == 1:
 				trisnap_applescript = '''\
 				tell application "{application}"
 					set bounds of front window to {{0, 0, {W_chrome}, {H_chrome}}}
 				end tell
 				tell application "Terminal"
+					activate
 					do script " "
+					activate
 					set bounds of front window to {{{leftPos_terminal}, 0, {W_terminal}, {H_terminal}}}
 				end tell
 				tell application "Terminal"
+					activate
 					do script " "
 					activate
 					set bounds of front window to {{{leftPos_terminal}, {H_terminal}, {W_terminal}, {H_terminal2}}}

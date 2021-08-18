@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 #
 # custom.py
+# > 1
 # GUI implementation to change code for different applications. TL;DR: Snap two screens horizontally of YOUR CHOICE, chosen from a GUI like rumps Objc-Status-Bar-App.
+# > 2
+# Duplicate/play around with windows and keep the same events.
 import rumps
 import subprocess, sys, os
 from AppKit import NSWorkspace, NSAttributedString
@@ -147,11 +150,36 @@ tripend = rumps.MenuItem("Trisnap", callback=trisnap, key='3')
 
 menu.append(tripend)
 
-
 # divider
 menu.append(None)
 
 
+# header no. 4
+string4 = NSAttributedString.alloc().initWithString_attributes_("Accessibility ⚙️", attributes)
+menu_item4 = rumps.MenuItem("")
+menu_item4._menuitem.setAttributedTitle_(string4)
+
+menu.append(menu_item4)
+
+# description of header no. 4
+stringDesc4 = NSAttributedString.alloc().initWithString_attributes_("Make any changes to events.", attributesDesc)
+menu_itemDesc4 = rumps.MenuItem("")
+menu_itemDesc4._menuitem.setAttributedTitle_(stringDesc4)
+
+menu.append(menu_itemDesc4)
+
+# alter the execute.sh file to tripend on click
+def flipwindows(sender):
+	rumps.notification("Flipped your windows", "Your keybinds have remained the same", "To change your snap orientation, click another option", data=None, sound=True)
+
+flipwindows = rumps.MenuItem("Invert windows", callback=flipwindows, key='3')
+
+menu.append(flipwindows)
+
+
+
+# divider
+menu.append(None)
 
 
 #TODO:

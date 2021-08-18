@@ -5,7 +5,7 @@ read -d '' OSASCRIPT << EOF
 		repeat with i from 1 to (count of windows)
 			set c to c + (count of tabs in window i)
 		end repeat
-		c
+		c + 1
 	end tell
 EOF
 
