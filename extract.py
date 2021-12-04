@@ -99,7 +99,10 @@ if platform.system() == 'Darwin':
 
 		# tripend option selected through argument change
 		elif str(sys.argv[1]) == "trisnap":
-			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			try:
+				num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			except ValueError:
+				num_of_terminals = 2
 			if num_of_terminals == 2:
 				trisnap_applescript = '''\
 				tell application "{application}"

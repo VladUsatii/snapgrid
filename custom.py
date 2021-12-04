@@ -185,7 +185,8 @@ menu.append(None)
 #TODO:
 # get a list of a few keybinds
 def aboutUs(sender):
-	subprocess.Popen(["python3", "about.py"], stdout=subprocess.PIPE) # not working
+	subprocess.Popen(["chmod", "+x", "about.sh"], stdout=subprocess.PIPE)
+	# subprocess.Popen(["python3", "about.py"], stdout=subprocess.PIPE) # not working
 
 # about button
 # about = rumps.MenuItem("About Snapgrid", callback=lambda: aboutUs(), key="A")
