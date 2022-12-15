@@ -2,4 +2,4 @@
 export PATH=/usr/local/bin:$PATH
 cd /Users/$USER/Dev/snapgrid
 
-python3 extract.py trisnap
+python3 extract.py dual

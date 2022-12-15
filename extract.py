@@ -63,7 +63,10 @@ if platform.system() == 'Darwin':
 			parse(mono_applescript)
 
 		elif str(sys.argv[1]) == "dual":
-			num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			try:
+				num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
+			except ValueError:
+				num_of_terminals = 2
 			if num_of_terminals == 2:
 				dual_applescript = '''\
 				tell application "{application}"
@@ -103,6 +106,7 @@ if platform.system() == 'Darwin':
 				num_of_terminals = int(subprocess.check_output("bash openterminals.sh", shell=True))
 			except ValueError:
 				num_of_terminals = 2
+			num_of_terminals = 2
 			if num_of_terminals == 2:
 				trisnap_applescript = '''\
 				tell application "{application}"
